@@ -351,8 +351,8 @@ svn co https://cvs.khronos.org/svn/repos/registry/trunk/public/typedarray
 
     <p>
 
-    When the not-a-number (NaN) value is stored into a <code>Float32Array</code>
-    or <code>Float64Array</code>, or into a <code>DataView</code> using the <code>setFloat32</code>
+    When the not-a-number (NaN) value is stored into a <code>Float16Array</code>, <code>Float32Array</code>
+    or <code>Float64Array</code>, or into a <code>DataView</code> using the <code>setFloat16</code>, <code>setFloat32</code>
     or <code>setFloat64</code> methods, the bit pattern written into the underlying ArrayBuffer is
     not specified, but shall be one of the IEEE 754 bit patterns that represent
     NaN <a href="#refsIEEE754">[IEEE-754]</a>.
@@ -360,7 +360,7 @@ svn co https://cvs.khronos.org/svn/repos/registry/trunk/public/typedarray
     </p>    
     <p>
 
-    When a bit pattern representing an IEEE 754 NaN is loaded from a <code>Float32Array</code>
+    When a bit pattern representing an IEEE 754 NaN is loaded from a <code>Float16Array</code>, <code>Float32Array</code>
     or <code>Float64Array</code>, or from a <code>DataView</code> using the <code>getFloat32</code>
     or <code>getFloat64</code> methods, the language binding (for example, ECMAScript) may use an
     alternative bit pattern to represent the NaN value.
@@ -524,6 +524,7 @@ interface <dfn id="ArrayBufferView">ArrayBufferView</dfn> {
 	<tr><td><code>Uint16Array</code></td><td>2</td><td>16-bit unsigned integer</td><td><code>unsigned short</code></td><td><code>unsigned short</code></td></tr>
 	<tr><td><code>Int32Array</code></td><td>4</td><td>32-bit 2's complement signed integer</td><td><code>long</code></td><td><code>int</code></td></tr>
 	<tr><td><code>Uint32Array</code></td><td>4</td><td>32-bit unsigned integer</td><td><code>unsigned long</code></td><td><code>unsigned int</code></td></tr>
+	<tr><td><code>Float16Array</code></td><td>4</td><td>16-bit IEEE floating point</td><td><code>unrestricted half</code></td><td><code>half</code></td></tr>
 	<tr><td><code>Float32Array</code></td><td>4</td><td>32-bit IEEE floating point</td><td><code>unrestricted float</code></td><td><code>float</code></td></tr>
 	<tr><td><code>Float64Array</code></td><td>8</td><td>64-bit IEEE floating point</td><td><code>unrestricted double</code></td><td><code>double</code></td></tr>
       </tbody>
@@ -656,7 +657,7 @@ interface <dfn id="TypedArray"><i>TypedArray</i></dfn> {
               <p>Returns the element at the given numeric index.</p>
 
               <p>See <a href="#NAN">handling of NaN values</a> for additional rules
-              covering <code>Float32Array</code> and <code>Float64Array</code>.</p>
+              covering <code>Float16Array</code>, <code>Float32Array</code> and <code>Float64Array</code>.</p>
             </dd>
           </dl>
 	  </td>
@@ -807,6 +808,8 @@ interface <dfn id="DataView">DataView</dfn> {
                   optional boolean littleEndian);
     unsigned long getUint32(unsigned long byteOffset,
                             optional boolean littleEndian);
+    float getFloat16(unsigned long byteOffset,
+                     optional boolean littleEndian);
     float getFloat32(unsigned long byteOffset,
                      optional boolean littleEndian);
     double getFloat64(unsigned long byteOffset,
@@ -839,6 +842,9 @@ interface <dfn id="DataView">DataView</dfn> {
     void setUint32(unsigned long byteOffset,
                    unsigned long value,
                    optional boolean littleEndian);
+    void setFloat16(unsigned long byteOffset,
+                    float value,
+                    optional boolean littleEndian);
     void setFloat32(unsigned long byteOffset,
                     float value,
                     optional boolean littleEndian);
@@ -891,6 +897,7 @@ DataView implements ArrayBufferView;</pre>
               <dt class="idl-code">unsigned short <i>getUint16</i>(unsigned long byteOffset, optional boolean littleEndian);</dt>
               <dt class="idl-code">long <i>getInt32</i>(unsigned long byteOffset, optional boolean littleEndian);</dt>
               <dt class="idl-code">unsigned long <i>getUint32</i>(unsigned long byteOffset, optional boolean littleEndian);</dt>
+              <dt class="idl-code">float <i>getFloat16</i>(unsigned long byteOffset, optional boolean littleEndian);</dt>
               <dt class="idl-code">float <i>getFloat32</i>(unsigned long byteOffset, optional boolean littleEndian);</dt>
               <dt class="idl-code">double <i>getFloat64</i>(unsigned long byteOffset, optional boolean littleEndian);</dt>
               <dd>
@@ -906,7 +913,7 @@ DataView implements ArrayBufferView;</pre>
                 beyond the end of the view.</p>
 
                 <p>See <a href="#NAN">handling of NaN values</a> for additional rules
-                covering <code>getFloat32</code> and <code>getFloat64</code>.</p>
+                covering <code>getFloat16</code>, <code>getFloat32</code> and <code>getFloat64</code>.</p>
               </dd>
             </dl>
 	  </td>
@@ -920,6 +927,7 @@ DataView implements ArrayBufferView;</pre>
               <dt class="idl-code">void <i>setUint16</i>(unsigned long byteOffset, unsigned short value, optional boolean littleEndian);</dt>
               <dt class="idl-code">void <i>setInt32</i>(unsigned long byteOffset, long value, optional boolean littleEndian);</dt>
               <dt class="idl-code">void <i>setUint32</i>(unsigned long byteOffset, unsigned long value, optional boolean littleEndian);</dt>
+              <dt class="idl-code">void <i>setFloat16</i>(unsigned long byteOffset, float value, optional boolean littleEndian);</dt>
               <dt class="idl-code">void <i>setFloat32</i>(unsigned long byteOffset, float value, optional boolean littleEndian);</dt>
               <dt class="idl-code">void <i>setFloat64</i>(unsigned long byteOffset, double value, optional boolean littleEndian);</dt>
               <dd>

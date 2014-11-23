@@ -175,6 +175,25 @@ interface Uint32Array {
 };
 Uint32Array implements ArrayBufferView;
 
+[
+    Constructor(unsigned long length),
+    Constructor(Float16Array array),
+    Constructor(unrestricted float[] array),
+    Constructor(ArrayBuffer buffer, 
+                optional unsigned long byteOffset, optional unsigned long length)
+]
+interface Float16Array {
+    const long BYTES_PER_ELEMENT = 2;
+    
+    readonly attribute unsigned long length;
+    
+    getter unrestricted float get(unsigned long index);
+    setter void set(unsigned long index, unrestricted float value);
+    void set(Float16Array array, optional unsigned long offset);
+    void set(unrestricted float[] array, optional unsigned long offset);
+    Float16Array subarray(long start, long end);
+};
+Float16Array implements ArrayBufferView;
 
 [
     Constructor(unsigned long length),
@@ -244,6 +263,8 @@ interface DataView {
                   optional boolean littleEndian);
     unsigned long getUint32(unsigned long byteOffset,
                             optional boolean littleEndian);
+    unrestricted float getFloat16(unsigned long byteOffset,
+                                  optional boolean littleEndian);
     unrestricted float getFloat32(unsigned long byteOffset,
                                   optional boolean littleEndian);
     unrestricted double getFloat64(unsigned long byteOffset,
@@ -276,6 +297,9 @@ interface DataView {
     void setUint32(unsigned long byteOffset,
                    unsigned long value,
                    optional boolean littleEndian);
+    void setFloat16(unsigned long byteOffset,
+                    unrestricted float value,
+                    optional boolean littleEndian);
     void setFloat32(unsigned long byteOffset,
                     unrestricted float value,
                     optional boolean littleEndian);
